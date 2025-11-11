@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>湖北・九里半街道散策ルート</title>
+
+    <!-- Cesium -->
+    <script src="https://unpkg.com/cesium@latest/Build/Cesium/Cesium.js"></script>
+    <link href="https://unpkg.com/cesium@latest/Build/Cesium/Widgets/widgets.css" rel="stylesheet" />
+
+    <!-- 共通CSS -->
+    <link href="../../common/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- レイヤー切替ツールバー -->
+    <div class="layer-toolbar">
+        <button id="btn-gsi">地理院</button>
+        <button id="btn-satellite">衛星</button>
+        <button id="btn-old">古地図</button>
+    </div>
+
+    <!-- Cesiumコンテナ -->
+    <div id="cesiumContainer"></div>
+
+    <!-- 共通ライブラリ -->
+    <script src="../../common/layerDefinitions.js"></script>
+    <script src="../../common/cesiumMapUtils.js"></script>
+
+    <!-- 地図固有の設定 -->
+    <script src="config.js"></script>
+
+    <!-- 初期化スクリプト -->
+    <script>
+        (async function () {
+            const mapBuilder = new CesiumMapBuilder('cesiumContainer', MAP_CONFIG);
+            await mapBuilder.init(LAYER_DEFINITIONS);
+        })();
+    </script>
+</body>
+
+</html>

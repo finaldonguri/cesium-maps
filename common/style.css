@@ -1,0 +1,55 @@
+/* Cesium地図共通スタイル */
+
+html {
+    height: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    height: 100%;
+    font-family: sans-serif;
+}
+
+#cesiumContainer {
+    position: absolute;
+    inset: 0;
+}
+
+/* レイヤー切替ツールバー */
+.layer-toolbar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    background: rgba(0, 0, 0, .45);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 6px;
+    display: flex;
+    gap: 6px;
+}
+
+.layer-toolbar button {
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    background: rgba(255, 255, 255, .12);
+    transition: background 0.2s ease;
+}
+
+.layer-toolbar button:hover {
+    background: rgba(255, 255, 255, .2);
+}
+
+.layer-toolbar button.active {
+    background: #2d8cff;
+}
+
+/* 古地図ボタンを非表示にする場合 */
+.layer-toolbar button.hidden {
+    display: none;
+}
