@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cesium地図コレクション</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .map-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .map-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .map-card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+        }
+
+        .map-card-content {
+            padding: 20px;
+        }
+
+        .map-card-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .map-card-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .map-card-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .feature-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+
+        .map-card-link {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .map-card-link:hover {
+            background: #764ba2;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+        }
+
+        .info-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .info-section p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section li {
+            color: #666;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .map-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🗺️ Cesium 3D地図コレクション</h1>
+
+        <div class="map-grid">
+            <!-- 九里半街道 -->
+            <div class="map-card" onclick="location.href='maps/map_kurihan/index.html'">
+                <div class="map-card-image">🏔️</div>
+                <div class="map-card-content">
+                    <h3 class="map-card-title">湖北・九里半街道</h3>
+                    <p class="map-card-description">
+                        滋賀県湖北地方の歴史的な街道を3D地形で再現。古地図と現代地図を比較しながら散策ルートを確認できます。
+                    </p>
+                    <div class="map-card-features">
+                        <span class="feature-tag">線A</span>
+                        <span class="feature-tag">線B切替</span>
+                        <span class="feature-tag">15地点</span>
+                        <span class="feature-tag">古地図4枚</span>
+                    </div>
+                    <a href="maps/map_kurihan/index.html" class="map-card-link">地図を開く →</a>
+                </div>
+            </div>
+
+            <!-- 道場 -->
+            <div class="map-card" onclick="location.href='maps/map_dojo/index.html'">
+                <div class="map-card-image">⛩️</div>
+                <div class="map-card-content">
+                    <h3 class="map-card-title">道場マップ</h3>
+                    <p class="map-card-description">
+                        道場周辺の3D地形マップ。線A・線Bのオンオフ切替が可能で、11箇所のポイントを確認できます。
+                    </p>
+                    <div class="map-card-features">
+                        <span class="feature-tag">線A切替</span>
+                        <span class="feature-tag">線B切替</span>
+                        <span class="feature-tag">11地点</span>
+                    </div>
+                    <a href="maps/map_dojo/index.html" class="map-card-link">地図を開く →</a>
+                </div>
+            </div>
+
+            <!-- GRS -->
+            <div class="map-card" onclick="location.href='maps/map_GRS/index.html'">
+                <div class="map-card-image">📍</div>
+                <div class="map-card-content">
+                    <h3 class="map-card-title">GRSマップ</h3>
+                    <p class="map-card-description">
+                        GRS地点の3D地形表示。古地図との比較が可能です。
+                    </p>
+                    <div class="map-card-features">
+                        <span class="feature-tag">1地点</span>
+                        <span class="feature-tag">古地図</span>
+                    </div>
+                    <a href="maps/map_GRS/index.html" class="map-card-link">地図を開く →</a>
+                </div>
+            </div>
+
+            <!-- 保津 -->
+            <div class="map-card" onclick="location.href='maps/map_hozu/index.html'">
+                <div class="map-card-image">🚣</div>
+                <div class="map-card-content">
+                    <h3 class="map-card-title">保津川マップ</h3>
+                    <p class="map-card-description">
+                        保津川周辺の3D地形マップ。線Bのオンオフ切替が可能で、約15箇所のポイントを確認できます。
+                    </p>
+                    <div class="map-card-features">
+                        <span class="feature-tag">線B切替</span>
+                        <span class="feature-tag">15地点</span>
+                        <span class="feature-tag">古地図</span>
+                    </div>
+                    <a href="maps/map_hozu/index.html" class="map-card-link">地図を開く →</a>
+                </div>
+            </div>
+
+            <!-- ミルクストーン -->
+            <div class="map-card" onclick="location.href='maps/map_milkstone/index.html'">
+                <div class="map-card-image">🥛</div>
+                <div class="map-card-content">
+                    <h3 class="map-card-title">ミルクストーンマップ</h3>
+                    <p class="map-card-description">
+                        ミルクストーン地点の3D地形表示。線A・線Bの切替が可能で、高度調整されたポイントを表示します。
+                    </p>
+                    <div class="map-card-features">
+                        <span class="feature-tag">線A切替</span>
+                        <span class="feature-tag">線B切替</span>
+                        <span class="feature-tag">2地点</span>
+                        <span class="feature-tag">古地図</span>
+                    </div>
+                    <a href="maps/map_milkstone/index.html" class="map-card-link">地図を開く →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>📖 このサイトについて</h2>
+            <p>
+                Cesium.jsを使用した3D地形地図コレクションです。現代の衛星画像・地理院地図に加え、
+                明治・大正期の古地図を重ねて表示することで、地形の変遷を視覚的に理解できます。
+            </p>
+
+            <h2>🎯 主な機能</h2>
+            <ul>
+                <li>3D地形表示による立体的な地形把握</li>
+                <li>衛星画像・地理院地図・古地図の切替表示</li>
+                <li>ルート表示（赤い点線・黄色い空中矢印）</li>
+                <li>引出線付きポイントラベルによる地点説明</li>
+                <li>モバイル対応のレスポンシブデザイン</li>
+            </ul>
+
+            <h2>🔧 技術スタック</h2>
+            <ul>
+                <li>Cesium.js - 3D地球儀・地図ライブラリ</li>
+                <li>地理院タイル - 国土地理院提供の地図タイル</li>
+                <li>Stanford Libraries - 古地図データ</li>
+                <li>GitHub Pages - ホスティング</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
