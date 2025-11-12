@@ -13,19 +13,16 @@
     <!-- 共通CSS -->
     <link href="../../common/styles.css" rel="stylesheet" />
 
-    <!-- 余白完全除去 -->
+    <!-- 余白完全除去（ボタンは除外） -->
     <style>
-        * {
-            margin: 0 !important;
-            padding: 0 !important;
-            box-sizing: border-box !important;
-        }
-
         html,
         body {
+            margin: 0 !important;
+            padding: 0 !important;
             width: 100% !important;
             height: 100% !important;
             overflow: hidden !important;
+            box-sizing: border-box !important;
         }
 
         #cesiumContainer {
@@ -34,6 +31,14 @@
             left: 0 !important;
             width: 100% !important;
             height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Cesiumウィジェットの余白除去 */
+        .cesium-viewer {
+            margin: 0 !important;
+            padding: 0 !important;
         }
     </style>
 </head>
