@@ -1,7 +1,14 @@
 /* Cesium地図共通スタイル */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 html {
     height: 100%;
+    width: 100%;
 }
 
 body {
@@ -9,12 +16,19 @@ body {
     margin: 0;
     overflow: hidden;
     height: 100%;
+    width: 100%;
     font-family: sans-serif;
 }
 
 #cesiumContainer {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 /* レイヤー切替ツールバー */
