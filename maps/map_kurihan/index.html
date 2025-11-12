@@ -12,6 +12,30 @@
 
     <!-- 共通CSS -->
     <link href="../../common/styles.css" rel="stylesheet" />
+
+    <!-- 余白完全除去 -->
+    <style>
+        * {
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        html,
+        body {
+            width: 100% !important;
+            height: 100% !important;
+            overflow: hidden !important;
+        }
+
+        #cesiumContainer {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
 </head>
 
 <body>
