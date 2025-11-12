@@ -13,8 +13,8 @@
     <!-- 共通CSS -->
     <link href="../../common/styles.css" rel="stylesheet" />
 
-    <!-- 余白完全除去（ボタンは除外） -->
     <style>
+        /* 余白完全除去 */
         html,
         body {
             margin: 0 !important;
@@ -35,10 +35,37 @@
             padding: 0 !important;
         }
 
-        /* Cesiumウィジェットの余白除去 */
         .cesium-viewer {
             margin: 0 !important;
             padding: 0 !important;
+        }
+
+        /* レイヤーツールバー（確実に表示） */
+        .layer-toolbar {
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 1000 !important;
+            background: rgba(0, 0, 0, .45) !important;
+            backdrop-filter: blur(6px) !important;
+            border-radius: 12px !important;
+            padding: 6px !important;
+            display: flex !important;
+            gap: 6px !important;
+        }
+
+        .layer-toolbar button {
+            border: none !important;
+            padding: 6px 10px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            color: #fff !important;
+            background: rgba(255, 255, 255, .12) !important;
+            font-size: 14px !important;
+        }
+
+        .layer-toolbar button.active {
+            background: #2d8cff !important;
         }
     </style>
 </head>
