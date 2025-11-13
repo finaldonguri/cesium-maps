@@ -349,7 +349,7 @@ class CesiumMapBuilder {
         let visible = this.config.lineB.defaultVisible;
         const refreshLook = () => {
             btn.classList.toggle("active", visible);
-            btn.textContent = visible ? "↑:ON" : "↑:OFF";
+            btn.textContent = visible ? "→:ON" : "→:OFF";
         };
         refreshLook();
 
