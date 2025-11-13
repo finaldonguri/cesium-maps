@@ -103,7 +103,7 @@ const MAP_CONFIG = {
 
     // 引出線付きポイント・ラベル
     points: [
-        { longitude: 135.979569, latitude: 35.363215, height: 150, name: "上古賀" },
+        { longitude: 135.979569, latitude: 35.363215, height: 150, name: "上古賀\nKami-koga" },
         { longitude: 135.992452, latitude: 35.358096, height: 150, name: "下古賀" },
         { longitude: 135.999059, latitude: 35.346819, height: 150, name: "南古賀" },
         { longitude: 136.036103, latitude: 35.401112, height: 150, name: "今津" },
