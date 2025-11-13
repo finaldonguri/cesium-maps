@@ -103,21 +103,21 @@ const MAP_CONFIG = {
 
     // 引出線付きポイント・ラベル
     points: [
-        { longitude: 135.979569, latitude: 35.363215, height: 150, name: "上古賀\nKami-koga" },
-        { longitude: 135.992452, latitude: 35.358096, height: 150, name: "下古賀" },
-        { longitude: 135.999059, latitude: 35.346819, height: 150, name: "南古賀" },
-        { longitude: 136.036103, latitude: 35.401112, height: 150, name: "今津" },
-        { longitude: 136.002362, latitude: 35.387109, height: 150, name: "饗庭野演習場" },
-        { longitude: 136.031997, latitude: 35.372335, height: 150, name: "饗庭" },
-        { longitude: 136.029968, latitude: 35.359905, height: 150, name: "熊野本" },
-        { longitude: 136.013546, latitude: 35.358712, height: 150, name: "大寶寺山" },
-        { longitude: 136.021757, latitude: 35.346550, height: 150, name: "安曇川" },
-        { longitude: 136.066304, latitude: 35.353863, height: 150, name: "外ヶ浜" },
-        { longitude: 136.027090, latitude: 35.351784, height: 150, name: "安井川" },
-        { longitude: 136.020389, latitude: 35.343009, height: 150, name: "十八川" },
-        { longitude: 136.008685, latitude: 35.344818, height: 150, name: "庄堺" },
-        { longitude: 136.033106, latitude: 35.386475, height: 150, name: "木津" },
-        { longitude: 136.043913, latitude: 35.409439, height: 150, name: "濱分" }
+        { longitude: 135.979569, latitude: 35.363215, height: 150, name: "上古賀\nKamikoga" },
+        { longitude: 135.992452, latitude: 35.358096, height: 150, name: "下古賀\nShimokoga" },
+        { longitude: 135.999059, latitude: 35.346819, height: 150, name: "南古賀\nMinamikoga" },
+        { longitude: 136.036103, latitude: 35.401112, height: 150, name: "今津\nImazu" },
+        { longitude: 136.002362, latitude: 35.387109, height: 150, name: "今津駐屯地\nJGSDF Camp Imazu" },
+        { longitude: 136.031997, latitude: 35.372335, height: 150, name: "饗庭\nAiba" },
+        { longitude: 136.029968, latitude: 35.359905, height: 150, name: "熊野本\nKumanomoto" },
+        { longitude: 136.013546, latitude: 35.358712, height: 150, name: "大寶寺山\nMt.Daihouji-yama" },
+        { longitude: 136.021757, latitude: 35.346550, height: 150, name: "安曇川\nAdogawa Riv." },
+        { longitude: 136.066304, latitude: 35.353863, height: 150, name: "外ヶ浜\nSotogahama" },
+        { longitude: 136.027090, latitude: 35.351784, height: 150, name: "安井川\nYasuigawa" },
+        { longitude: 136.020389, latitude: 35.343009, height: 150, name: "十八川\nJūhachigawa" },
+        { longitude: 136.008685, latitude: 35.344818, height: 150, name: "庄堺\nShouzakai" },
+        { longitude: 136.033106, latitude: 35.386475, height: 150, name: "木津\nKōtsu" },
+        { longitude: 136.043913, latitude: 35.409439, height: 150, name: "濱分\nHamabun" }
     ],
 
     // 画像レイヤー設定
