@@ -7,10 +7,11 @@ const MAP_CONFIG = {
     cesiumToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyOGRiZmY3Yy0wNzRjLTQ2MjktOGQ0Ni0xYmI5MzFmNDUxZDAiLCJpZCI6MzU0MDY0LCJpYXQiOjE3NjE0NTQ3MDh9.p9q4yTuNNbVz7U09nx04n-LQG0sxXh8TDw22H3FSIV0",
 
     // 初期表示位置
+    // 初期表示位置
     initialView: {
-        longitude: 136.02,
-        latitude: 35.37,
-        height: 15000
+        longitude: 136.346,   // 高室山の経度
+        latitude: 35.213,     // 高室山の緯度
+        height: 5000          // カメラ高度（より近くから見る）
     },
 
     // 3D地形
