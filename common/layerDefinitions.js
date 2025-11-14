@@ -9,6 +9,12 @@ const LAYER_DEFINITIONS = {
         assetId: 3830183,
         type: 'ion'
     },
+    
+    // Google Photorealistic 3D Tiles（Cesium Ion）  ← これが追加されているか確認
+    googlePhotorealistic3DTiles: {
+        assetId: 2275207,
+        type: '3dtiles'
+    },
 
     // Google Maps 2D Roadmap（Cesium Ion）
     googleMaps: {

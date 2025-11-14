@@ -63,6 +63,7 @@ const MAP_CONFIG = {
     // 画像レイヤー設定
     layers: {
         satellite: true,         // 衛星画像を使用
+        googlePhotorealistic3DTiles: true,
         googleMaps: true,        // Google Maps を使用
         gsi: true,              // 地理院地図を使用
         oldMaps: [              // 使用する古地図（layerDefinitions.jsのキーを指定）

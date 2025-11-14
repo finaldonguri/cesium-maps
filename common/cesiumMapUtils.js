@@ -64,6 +64,7 @@ class CesiumMapBuilder {
                 this.config.terrain.assetId
             );
             this.viewer.terrainProvider = terrainProvider;
+            this.defaultTerrain = terrainProvider;  // デフォルト地形を保存
         }
 
         return this.viewer;
@@ -79,6 +80,19 @@ class CesiumMapBuilder {
                 layerDefinitions.satellite.assetId
             );
             this.layers.satellite = layers.addImageryProvider(satelliteProvider);
+        }
+
+        // Google Photorealistic 3D Tiles（初期化のみ、表示はしない）
+        if (this.config.layers.googlePhotorealistic3DTiles) {
+            try {
+                this.google3DTileset = await Cesium.Cesium3DTileset.fromIonAssetId(
+                    layerDefinitions.googlePhotorealistic3DTiles.assetId
+                );
+                this.google3DTileset.show = false;  // 初期は非表示
+                this.viewer.scene.primitives.add(this.google3DTileset);
+            } catch (error) {
+                console.error("Google 3D Tiles読み込みエラー:", error);
+            }
         }
 
         // Google Maps
@@ -118,45 +132,65 @@ class CesiumMapBuilder {
             l.brightness = 0.95;
         });
 
-        // 初期表示: 衛星のみON
-        this.showLayer('satellite');
+        // 初期表示: 衛星のみON（3D Tilesを使う場合は後で切り替え）
+        this.showLayer(this.config.layers.googlePhotorealistic3DTiles ? 'satellite3d' : 'satellite');
     }
 
     // レイヤー表示切替
     showLayer(type) {
-        // 全OFF
+        // 全てのImageryレイヤーをOFF
         if (this.layers.satellite) this.layers.satellite.show = false;
         if (this.layers.googleMaps) this.layers.googleMaps.show = false;
         if (this.layers.gsi) this.layers.gsi.show = false;
         this.layers.oldMaps.forEach(l => l.show = false);
 
-        // 指定レイヤーのみON
+        // Google 3D TilesをOFF
+        if (this.google3DTileset) {
+            this.google3DTileset.show = false;
+        }
+
+        // 地形を通常に戻す
+        if (this.defaultTerrain) {
+            this.viewer.terrainProvider = this.defaultTerrain;
+        }
+
         const layers = this.viewer.imageryLayers;
-        switch (type) {
-            case 'satellite':
-                if (this.layers.satellite) {
-                    this.layers.satellite.show = true;
-                    layers.lowerToBottom(this.layers.satellite);
-                }
-                break;
-            case 'googleMaps':
-                if (this.layers.googleMaps) {
-                    this.layers.googleMaps.show = true;
-                    layers.lowerToBottom(this.layers.googleMaps);
-                }
-                break;
-            case 'gsi':
-                if (this.layers.gsi) {
-                    this.layers.gsi.show = true;
-                    layers.lowerToBottom(this.layers.gsi);
-                }
-                break;
-            case 'oldMaps':
-                this.layers.oldMaps.forEach(l => l.show = true);
-                if (this.layers.oldMaps.length > 0) {
-                    layers.raiseToTop(this.layers.oldMaps[this.layers.oldMaps.length - 1]);
-                }
-                break;
+
+        if (type === 'satellite3d') {
+            // Google Photorealistic 3D Tilesモード
+            if (this.google3DTileset) {
+                this.google3DTileset.show = true;
+                // 3D Tilesは自前の地形を持つので、通常の地形を平面にする
+                this.viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider();
+            }
+        } else {
+            // 通常のImageryモード
+            switch (type) {
+                case 'satellite':
+                    if (this.layers.satellite) {
+                        this.layers.satellite.show = true;
+                        layers.lowerToBottom(this.layers.satellite);
+                    }
+                    break;
+                case 'googleMaps':
+                    if (this.layers.googleMaps) {
+                        this.layers.googleMaps.show = true;
+                        layers.lowerToBottom(this.layers.googleMaps);
+                    }
+                    break;
+                case 'gsi':
+                    if (this.layers.gsi) {
+                        this.layers.gsi.show = true;
+                        layers.lowerToBottom(this.layers.gsi);
+                    }
+                    break;
+                case 'oldMaps':
+                    this.layers.oldMaps.forEach(l => l.show = true);
+                    if (this.layers.oldMaps.length > 0) {
+                        layers.raiseToTop(this.layers.oldMaps[this.layers.oldMaps.length - 1]);
+                    }
+                    break;
+            }
         }
     }
 
@@ -167,7 +201,12 @@ class CesiumMapBuilder {
 
         const buttons = [
             { id: 'btn-gsi', label: 'GEO', type: 'gsi', enabled: this.config.layers.gsi },
-            { id: 'btn-satellite', label: 'SAT', type: 'satellite', enabled: this.config.layers.satellite },
+            {
+                id: 'btn-satellite',
+                label: 'SAT',
+                type: this.config.layers.googlePhotorealistic3DTiles ? 'satellite3d' : 'satellite',
+                enabled: this.config.layers.satellite
+            },
             { id: 'btn-google', label: 'GGL', type: 'googleMaps', enabled: this.config.layers.googleMaps },
             { id: 'btn-old', label: '1945', type: 'oldMaps', enabled: this.config.layers.oldMaps && this.config.layers.oldMaps.length > 0 }
         ];
