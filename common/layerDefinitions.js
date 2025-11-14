@@ -63,6 +63,20 @@ const LAYER_DEFINITIONS = {
             minimumLevel: 2,
             maximumLevel: 18,
         },
+        // 『京都西北部』五万分一地形圖
+        kyoto_northwest: {
+            url: "https://mapwarper.h-gis.jp/maps/tile/3547/{z}/{x}/{y}.png",
+            credit: new Cesium.Credit("『京都西北部』五万分一地形圖, 作成: 1948, https://www.gsi.go.jp/"),
+            minimumLevel: 2,
+            maximumLevel: 18,
+        },
+        // 『京都西南部』五万分一地形圖
+        kyoto_southwest: {
+            url: "https://mapwarper.h-gis.jp/maps/tile/3546/{z}/{x}/{y}.png",
+            credit: new Cesium.Credit("『京都西南部』五万分一地形圖, 作成: 1946, https://www.gsi.go.jp/"),
+            minimumLevel: 2,
+            maximumLevel: 18,
+        },
     },
 
     // 将来的な拡張用（コメントアウト）
