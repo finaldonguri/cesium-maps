@@ -132,8 +132,8 @@ class CesiumMapBuilder {
             l.brightness = 0.95;
         });
 
-        // 初期表示: 衛星のみON（3D Tilesを使う場合は後で切り替え）
-        this.showLayer(this.config.layers.googlePhotorealistic3DTiles ? 'satellite3d' : 'satellite');
+        // 初期表示: 通常の衛星画像（軽い）
+        this.showLayer('satellite');
     }
 
     // レイヤー表示切替
@@ -223,8 +223,8 @@ class CesiumMapBuilder {
             }
         });
 
-        // 初期アクティブ状態
-        this.setActiveButton('btn-satellite');
+        // 初期アクティブ状態（最初は非選択）
+        // this.setActiveButton('btn-satellite');  // コメントアウト
     }
 
     setActiveButton(activeId) {
