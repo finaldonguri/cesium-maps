@@ -81,6 +81,14 @@ class CesiumMapBuilder {
             this.layers.satellite = layers.addImageryProvider(satelliteProvider);
         }
 
+        // Google Maps
+        if (this.config.layers.googleMaps) {
+            const googleMapsProvider = await Cesium.IonImageryProvider.fromAssetId(
+                layerDefinitions.googleMaps.assetId
+            );
+            this.layers.googleMaps = layers.addImageryProvider(googleMapsProvider);
+        }
+
         // 地理院
         if (this.config.layers.gsi) {
             const gsiProvider = new Cesium.UrlTemplateImageryProvider(layerDefinitions.gsi);
@@ -100,6 +108,7 @@ class CesiumMapBuilder {
         // 見た目調整
         const allLayers = [
             this.layers.satellite,
+            this.layers.googleMaps,
             this.layers.gsi,
             ...this.layers.oldMaps
         ].filter(Boolean);
@@ -117,6 +126,7 @@ class CesiumMapBuilder {
     showLayer(type) {
         // 全OFF
         if (this.layers.satellite) this.layers.satellite.show = false;
+        if (this.layers.googleMaps) this.layers.googleMaps.show = false;
         if (this.layers.gsi) this.layers.gsi.show = false;
         this.layers.oldMaps.forEach(l => l.show = false);
 
@@ -127,6 +137,12 @@ class CesiumMapBuilder {
                 if (this.layers.satellite) {
                     this.layers.satellite.show = true;
                     layers.lowerToBottom(this.layers.satellite);
+                }
+                break;
+            case 'googleMaps':
+                if (this.layers.googleMaps) {
+                    this.layers.googleMaps.show = true;
+                    layers.lowerToBottom(this.layers.googleMaps);
                 }
                 break;
             case 'gsi':
@@ -150,9 +166,10 @@ class CesiumMapBuilder {
         if (!toolbar) return;
 
         const buttons = [
-            { id: 'btn-gsi', label: '地理院', type: 'gsi', enabled: this.config.layers.gsi },
-            { id: 'btn-satellite', label: '衛星', type: 'satellite', enabled: this.config.layers.satellite },
-            { id: 'btn-old', label: '古地図', type: 'oldMaps', enabled: this.config.layers.oldMaps && this.config.layers.oldMaps.length > 0 }
+            { id: 'btn-gsi', label: 'GEO', type: 'gsi', enabled: this.config.layers.gsi },
+            { id: 'btn-satellite', label: 'SAT', type: 'satellite', enabled: this.config.layers.satellite },
+            { id: 'btn-google', label: 'GGL', type: 'googleMaps', enabled: this.config.layers.googleMaps },
+            { id: 'btn-old', label: '1945', type: 'oldMaps', enabled: this.config.layers.oldMaps && this.config.layers.oldMaps.length > 0 }
         ];
 
         buttons.forEach(btn => {
@@ -172,7 +189,7 @@ class CesiumMapBuilder {
     }
 
     setActiveButton(activeId) {
-        const ids = ['btn-gsi', 'btn-satellite', 'btn-old'];
+        const ids = ['btn-gsi', 'btn-satellite', 'btn-google', 'btn-old'];
         ids.forEach(id => {
             const el = document.getElementById(id);
             if (el) el.classList.toggle('active', id === activeId);
@@ -317,24 +334,80 @@ class CesiumMapBuilder {
 
     // 線Aトグルボタン作成
     createLineAToggle() {
-        // 実装省略（必要に応じて追加）
+        // 既存のボタンホルダーを探す（線Bボタン用）
+        let holder = document.querySelector('.line-toggle-holder');
+
+        if (!holder) {
+            // 新規作成
+            holder = document.createElement("div");
+            holder.className = "line-toggle-holder";
+            holder.style.position = "absolute";
+            holder.style.top = "10px";
+            holder.style.right = "10px";
+            holder.style.zIndex = "10";
+            holder.style.background = "rgba(0,0,0,.45)";
+            holder.style.backdropFilter = "blur(6px)";
+            holder.style.borderRadius = "12px";
+            holder.style.padding = "6px";
+            holder.style.display = "flex";
+            holder.style.gap = "6px";
+            document.body.appendChild(holder);
+        }
+
+        const btn = document.createElement("button");
+        btn.id = "btn-lineA";
+        btn.style.border = "none";
+        btn.style.padding = "6px 10px";
+        btn.style.borderRadius = "8px";
+        btn.style.cursor = "pointer";
+        btn.style.color = "#fff";
+        btn.style.background = "#2d8cff";
+        btn.classList.add("active");
+
+        // holderの最初に追加（線Bの左に表示）
+        holder.insertBefore(btn, holder.firstChild);
+
+        let visible = this.config.lineA.defaultVisible;
+        const refreshLook = () => {
+            btn.classList.toggle("active", visible);
+            btn.style.background = visible ? "#2d8cff" : "rgba(255,255,255,.12)";
+            btn.textContent = visible ? "---:ON" : "---:OFF";
+        };
+        refreshLook();
+
+        btn.onclick = () => {
+            visible = !visible;
+            if (this.entities.lineA) {
+                this.entities.lineA.show = visible;
+            }
+            refreshLook();
+        };
     }
 
     // 線Bトグルボタン作成
     createLineBToggle() {
-        const holder = document.createElement("div");
-        holder.style.position = "absolute";
-        holder.style.top = "10px";
-        holder.style.right = "10px";
-        holder.style.zIndex = "10";
-        holder.style.background = "rgba(0,0,0,.45)";
-        holder.style.backdropFilter = "blur(6px)";
-        holder.style.borderRadius = "12px";
-        holder.style.padding = "6px";
+        // 既存のボタンホルダーを探す（線Aボタン用）
+        let holder = document.querySelector('.line-toggle-holder');
+
+        if (!holder) {
+            // 新規作成
+            holder = document.createElement("div");
+            holder.className = "line-toggle-holder";
+            holder.style.position = "absolute";
+            holder.style.top = "10px";
+            holder.style.right = "10px";
+            holder.style.zIndex = "10";
+            holder.style.background = "rgba(0,0,0,.45)";
+            holder.style.backdropFilter = "blur(6px)";
+            holder.style.borderRadius = "12px";
+            holder.style.padding = "6px";
+            holder.style.display = "flex";
+            holder.style.gap = "6px";
+            document.body.appendChild(holder);
+        }
 
         const btn = document.createElement("button");
         btn.id = "btn-guideB";
-        btn.textContent = "空中ガイド B";
         btn.style.border = "none";
         btn.style.padding = "6px 10px";
         btn.style.borderRadius = "8px";
@@ -344,11 +417,11 @@ class CesiumMapBuilder {
         btn.classList.add("active");
 
         holder.appendChild(btn);
-        document.body.appendChild(holder);
 
         let visible = this.config.lineB.defaultVisible;
         const refreshLook = () => {
             btn.classList.toggle("active", visible);
+            btn.style.background = visible ? "#2d8cff" : "rgba(255,255,255,.12)";
             btn.textContent = visible ? "→:ON" : "→:OFF";
         };
         refreshLook();

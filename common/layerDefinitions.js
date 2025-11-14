@@ -10,6 +10,12 @@ const LAYER_DEFINITIONS = {
         type: 'ion'
     },
 
+    // Google Maps 2D Roadmap（Cesium Ion）
+    googleMaps: {
+        assetId: 3830184,
+        type: 'ion'
+    },
+
     // 地理院標準地図
     gsi: {
         url: "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png",
@@ -53,12 +59,6 @@ const LAYER_DEFINITIONS = {
     },
 
     // 将来的な拡張用（コメントアウト）
-    // googleStreetMap: {
-    //     url: "...",
-    //     credit: new Cesium.Credit("Google Maps"),
-    //     minimumLevel: 2,
-    //     maximumLevel: 18,
-    // },
     // weatherMap: {
     //     url: "...",
     //     credit: new Cesium.Credit("Weather Data"),
