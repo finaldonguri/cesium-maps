@@ -22,7 +22,7 @@ const MAP_CONFIG = {
     // 線A（赤い点線）
     lineA: {
         enabled: true,           // この地図で使用する
-        toggleable: false,       // ON/OFF切替不可（常に表示）
+        toggleable: true,       // ON/OFF切替不可（常に表示）
         defaultVisible: true,    // 初期表示ON
         coordinates: [
             [135.97661048267534, 35.36482341576319],
