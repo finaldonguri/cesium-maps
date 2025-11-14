@@ -66,7 +66,7 @@ const MAP_CONFIG = {
     points: [
         { longitude: 136.339935, latitude: 35.205954, height: 150, name: "Start/\nFinish" },
         { longitude: 136.3536672, latitude: 35.2201805, height: 150, name: "高室山(818m)\nMt.Takamuro" },
-            ],
+    ],
 
     // 画像レイヤー設定
     layers: {
@@ -74,7 +74,7 @@ const MAP_CONFIG = {
         googleMaps: true,        // Google Maps を使用
         gsi: true,              // 地理院地図を使用
         oldMaps: [              // 使用する古地図（layerDefinitions.jsのキーを指定）
-            'hikone_east'
+            'hikone_east',
         ]
     }
 };
