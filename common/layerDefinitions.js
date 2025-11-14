@@ -56,6 +56,13 @@ const LAYER_DEFINITIONS = {
             minimumLevel: 2,
             maximumLevel: 18,
         },
+        // 彦根東部
+        hikone_east: {
+            url: "https://mapwarper.h-gis.jp/maps/tile/817/{z}/{x}/{y}.png",
+            credit: new Cesium.Credit("『彦根東部』五万分一地形圖, 【測量時期】 明治24年測図/大正9年修正/昭和7年鉄道補入 【発行時期】 昭和8年6月発行, https://purl.stanford.edu/ry668yd4924"),
+            minimumLevel: 2,
+            maximumLevel: 18,
+        },
     },
 
     // 将来的な拡張用（コメントアウト）
