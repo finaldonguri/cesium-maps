@@ -65,8 +65,8 @@ const MAP_CONFIG = {
 
     // 引出線付きポイント・ラベル
     points: [
-        { longitude: 136.339935, latitude: 35.205954, height: 150, name: "Start/\nFinish" },
-        { longitude: 136.3536672, latitude: 35.2201805, height: 150, name: "高室山(818m)\nMt.Takamuro" },
+        { longitude: 136.339935, latitude: 35.205954, height: 150, name: "Start 9:55/\nFinish 16:30" },
+        { longitude: 136.3536672, latitude: 35.2201805, height: 150, name: "高室山(818m)\nMt.Takamuro\n12:30-13:25" },
     ],
 
     // 画像レイヤー設定
