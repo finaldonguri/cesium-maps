@@ -82,17 +82,11 @@ class CesiumMapBuilder {
             this.layers.satellite = layers.addImageryProvider(satelliteProvider);
         }
 
-        // Google Photorealistic 3D Tiles（初期化のみ、表示はしない）
+        // Google Photorealistic 3D Tiles（遅延読み込み用フラグのみ設定）
         if (this.config.layers.googlePhotorealistic3DTiles) {
-            try {
-                this.google3DTileset = await Cesium.Cesium3DTileset.fromIonAssetId(
-                    layerDefinitions.googlePhotorealistic3DTiles.assetId
-                );
-                this.google3DTileset.show = false;  // 初期は非表示
-                this.viewer.scene.primitives.add(this.google3DTileset);
-            } catch (error) {
-                console.error("Google 3D Tiles読み込みエラー:", error);
-            }
+            this.google3DTilesEnabled = true;
+            this.google3DTileset = null;  // 初期は未読み込み
+            this.google3DTilesAssetId = layerDefinitions.googlePhotorealistic3DTiles.assetId;
         }
 
         // Google Maps
@@ -132,12 +126,12 @@ class CesiumMapBuilder {
             l.brightness = 0.95;
         });
 
-        // 初期表示: 衛星のみON（3D Tilesを使う場合は後で切り替え）
-        this.showLayer(this.config.layers.googlePhotorealistic3DTiles ? 'satellite3d' : 'satellite');
+        // 初期表示: 常に衛星画像から開始（Google 3D Tilesは手動切替時のみ読み込み）
+        this.showLayer('satellite');
     }
 
     // レイヤー表示切替
-    showLayer(type) {
+    async showLayer(type) {
         // 全てのImageryレイヤーをOFF
         if (this.layers.satellite) this.layers.satellite.show = false;
         if (this.layers.googleMaps) this.layers.googleMaps.show = false;
@@ -157,7 +151,23 @@ class CesiumMapBuilder {
         const layers = this.viewer.imageryLayers;
 
         if (type === 'satellite3d') {
-            // Google Photorealistic 3D Tilesモード
+            // Google Photorealistic 3D Tilesモード（遅延読み込み）
+            if (!this.google3DTileset && this.google3DTilesEnabled) {
+                // まだ読み込まれていない場合は読み込む
+                try {
+                    console.log('Google 3D Tiles読み込み開始...');
+                    this.google3DTileset = await Cesium.Cesium3DTileset.fromIonAssetId(
+                        this.google3DTilesAssetId
+                    );
+                    this.viewer.scene.primitives.add(this.google3DTileset);
+                    console.log('Google 3D Tiles読み込み完了');
+                } catch (error) {
+                    console.error("Google 3D Tiles読み込みエラー:", error);
+                    // エラー時は衛星画像にフォールバック
+                    this.showLayer('satellite');
+                    return;
+                }
+            }
             if (this.google3DTileset) {
                 this.google3DTileset.show = true;
                 // 3D Tilesは自前の地形を持つので、通常の地形を平面にする
@@ -244,32 +254,45 @@ class CesiumMapBuilder {
     async addLineA() {
         if (!this.config.lineA.enabled) return;
 
-        // nullで区切られたフラット配列を複数のセグメントに分割
         const segments = [];
-        let currentSegment = [];
 
-        for (let i = 0; i < this.config.lineA.coordinates.length; i++) {
-            const item = this.config.lineA.coordinates[i];
+        // 座標形式を判定
+        const coords = this.config.lineA.coordinates;
+        if (coords.length === 0) return;
 
-            if (item === null) {
-                // nullが来たらセグメント終了
-                if (currentSegment.length > 0) {
-                    segments.push(currentSegment);
-                    currentSegment = [];
-                }
-            } else {
-                // 経度・緯度のペアを配列にして追加
-                const lon = item;
-                const lat = this.config.lineA.coordinates[i + 1];
-                if (lat !== undefined && lat !== null) {
-                    currentSegment.push([lon, lat]);
-                    i++; // 緯度をスキップ
+        // 最初の要素で形式を判定
+        const firstElement = coords[0];
+        const isNestedArray = Array.isArray(firstElement) && firstElement.length === 2;
+
+        if (isNestedArray) {
+            // 形式1: [[経度, 緯度], [経度, 緯度], ...] → そのまま1セグメントとして使用
+            segments.push(coords);
+        } else {
+            // 形式2: [経度, 緯度, 経度, 緯度, null, ...] → フラット配列からペア配列に変換
+            let currentSegment = [];
+            for (let i = 0; i < coords.length; i++) {
+                const item = coords[i];
+
+                if (item === null) {
+                    // nullが来たらセグメント終了
+                    if (currentSegment.length > 0) {
+                        segments.push(currentSegment);
+                        currentSegment = [];
+                    }
+                } else {
+                    // 経度・緯度のペアを配列にして追加
+                    const lon = item;
+                    const lat = coords[i + 1];
+                    if (lat !== undefined && lat !== null) {
+                        currentSegment.push([lon, lat]);
+                        i++; // 緯度をスキップ
+                    }
                 }
             }
-        }
-        // 最後のセグメントを追加
-        if (currentSegment.length > 0) {
-            segments.push(currentSegment);
+            // 最後のセグメントを追加
+            if (currentSegment.length > 0) {
+                segments.push(currentSegment);
+            }
         }
 
         // 複数セグメントを配列で管理
