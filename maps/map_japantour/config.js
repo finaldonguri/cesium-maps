@@ -1,5 +1,5 @@
 /**
- * 日本旅行マップの設定ファイル
+ * 日本旅行マップ（map_japantour）の設定ファイル
  */
 
 const MAP_CONFIG = {

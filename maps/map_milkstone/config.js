@@ -1,5 +1,5 @@
 /**
- * 九里半街道マップの設定ファイル
+ * 高室山登山マップ(map_milkstone)の設定ファイル
  */
 
 const MAP_CONFIG = {
