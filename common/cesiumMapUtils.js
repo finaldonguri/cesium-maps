@@ -239,23 +239,36 @@ class CesiumMapBuilder {
     async addLineA() {
         if (!this.config.lineA.enabled) return;
 
-        // nullで区切られた座標を複数のセグメントに分割
+        // nullで区切られたフラット配列を複数のセグメントに分割
         const segments = [];
         let currentSegment = [];
 
-        for (const coord of this.config.lineA.coordinates) {
-            if (coord === null) {
+        for (let i = 0; i < this.config.lineA.coordinates.length; i++) {
+            const item = this.config.lineA.coordinates[i];
+
+            if (item === null) {
+                // nullが来たらセグメント終了
                 if (currentSegment.length > 0) {
                     segments.push(currentSegment);
                     currentSegment = [];
                 }
             } else {
-                currentSegment.push(coord);
+                // 経度・緯度のペアを配列にして追加
+                const lon = item;
+                const lat = this.config.lineA.coordinates[i + 1];
+                if (lat !== undefined && lat !== null) {
+                    currentSegment.push([lon, lat]);
+                    i++; // 緯度をスキップ
+                }
             }
         }
+        // 最後のセグメントを追加
         if (currentSegment.length > 0) {
             segments.push(currentSegment);
         }
+
+        // 複数セグメントを配列で管理
+        this.entities.lineA = [];
 
         // 各セグメントごとにGeoJSONを作成して表示
         for (const segment of segments) {
@@ -284,9 +297,7 @@ class CesiumMapBuilder {
                     entity.polyline.width = 4;
                     entity.polyline.clampToGround = true;
                     entity.show = this.config.lineA.defaultVisible;
-                    if (!this.entities.lineA) {
-                        this.entities.lineA = [];
-                    }
+                    // 全セグメントを配列に追加
                     this.entities.lineA.push(entity);
                 }
             }
@@ -440,6 +451,7 @@ class CesiumMapBuilder {
 
         btn.onclick = () => {
             visible = !visible;
+            // 配列の全セグメントを切り替え
             if (Array.isArray(this.entities.lineA)) {
                 this.entities.lineA.forEach(entity => entity.show = visible);
             } else if (this.entities.lineA) {
