@@ -75,22 +75,24 @@ const MAP_CONFIG = {
 
     // 引出線付きポイント・ラベル（高度1200m）
     points: [
-        { longitude: 140.385810168081946, latitude: 35.764083530623161, height: 1200, name: "Point 1" },
-        { longitude: 139.766983627628036, latitude: 35.681205981017236, height: 1200, name: "東京\nTokyo" },
-        { longitude: 139.737679895997474, latitude: 35.683941228967406, height: 1200, name: "新宿\nShinjuku" },
-        { longitude: 139.702817565923084, latitude: 35.658252432961582, height: 1200, name: "Point 4" },
-        { longitude: 139.794695893313929, latitude: 35.711251094881909, height: 1200, name: "Point 5" },
-        { longitude: 139.810691279292513, latitude: 35.709883950913593, height: 1200, name: "Point 6" },
-        { longitude: 138.769330530570016, latitude: 35.498453861528816, height: 1200, name: "富士山周辺\nMt.Fuji area" },
-        { longitude: 138.756322026327894, latitude: 35.517379564114449, height: 1200, name: "Point 8" },
-        { longitude: 138.733349561389673, latitude: 35.394630640369606, height: 1200, name: "Point 9" },
-        { longitude: 135.757677280728956, latitude: 34.985654586175002, height: 1200, name: "京都\nKyoto" },
-        { longitude: 135.784501554547404, latitude: 34.994922955304148, height: 1200, name: "大阪\nOsaka" },
-        { longitude: 135.679314881504524, latitude: 35.012323112619477, height: 1200, name: "Point 12" },
-        { longitude: 132.47504812292965, latitude: 34.397143928965463, height: 1200, name: "広島\nHiroshima" },
-        { longitude: 132.452456225934668, latitude: 34.392623786583471, height: 1200, name: "Point 14" },
-        { longitude: 132.453799746097985, latitude: 34.395837870797713, height: 1200, name: "Point 15" },
-        { longitude: 132.319845596253629, latitude: 34.295998600952124, height: 1200, name: "Point 16" }
+        { longitude: 140.385810168081946, latitude: 35.764083530623161, height: 1200, name: "成田空港\nNarita Int'l Airport" },
+        { longitude: 139.766983627628036, latitude: 35.681205981017236, height: 1200, name: "東京駅\nTokyo Sta." },
+        { longitude: 139.737679895997474, latitude: 35.683941228967406, height: 1200, name: "麹町 D1 & D6 Hotel\nKojimachi" },
+        { longitude: 139.702817565923084, latitude: 35.658252432961582, height: 1200, name: "渋谷\nShibuya" },
+        { longitude: 139.794695893313929, latitude: 35.711251094881909, height: 1200, name: "浅草\nAsakusa" },
+        { longitude: 139.810691279292513, latitude: 35.709883950913593, height: 1200, name: "東京スカイツリー\nTokyo Sky Tree" },
+        { longitude: 138.769330530570016, latitude: 35.498453861528816, height: 1200, name: "河口湖駅 D2 Hotel\nKawaguchiko Sta." },
+        { longitude: 138.756322026327894, latitude: 35.517379564114449, height: 1200, name: "河口湖\nLake Kawaguchiko" },
+        { longitude: 138.733349561389673, latitude: 35.394630640369606, height: 1200, name: "富士山五合目\nMt. Fuji 5th Sta. \n(Kawaguchiko Side)" },
+        { longitude: 135.757677280728956, latitude: 34.985654586175002, height: 1200, name: "京都駅 D3 Hotel\nKyoto Sta." },
+        { longitude: 135.784501554547404, latitude: 34.994922955304148, height: 1200, name: "清水寺\nKiyomizudera Temple" },
+        { longitude: 135.679314881504524, latitude: 35.012323112619477, height: 1200, name: "嵐山\nArashiyama" },
+        { longitude: 135.679314881504524, latitude: 35.012323112619477, height: 1200, name: "伏見稲荷大社\nFushimi-inari Shrine" },
+        { longitude: 135.4966685, latitude: 34.7017417,   height: 1200, name: "大阪駅 D4 Hotel\nOsaka Sta." },
+        { longitude: 132.47504812292965, latitude: 34.397143928965463, height: 1200, name: "広島駅 D5 Hotel\nHiroshima Sta." },
+        { longitude: 132.452456225934668, latitude: 34.392623786583471, height: 1200, name: "平和記念公園\nHiroshima Peace Memorial" },
+        { longitude: 132.453799746097985, latitude: 34.395837870797713, height: 1200, name: "原爆ドーム\nAtomic Bomb Dome" },
+        { longitude: 132.319845596253629, latitude: 34.295998600952124, height: 1200, name: "厳島神社\nItsukushima Shrine" }
     ],
 
     // 画像レイヤー設定
