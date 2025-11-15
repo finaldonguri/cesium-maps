@@ -132,8 +132,8 @@ class CesiumMapBuilder {
             l.brightness = 0.95;
         });
 
-        // 初期表示: 通常の衛星画像（軽い）
-        this.showLayer('satellite');
+        // 初期表示: 衛星のみON（3D Tilesを使う場合は後で切り替え）
+        this.showLayer(this.config.layers.googlePhotorealistic3DTiles ? 'satellite3d' : 'satellite');
     }
 
     // レイヤー表示切替
@@ -223,8 +223,8 @@ class CesiumMapBuilder {
             }
         });
 
-        // 初期アクティブ状態（最初は非選択）
-        // this.setActiveButton('btn-satellite');  // コメントアウト
+        // 初期アクティブ状態
+        this.setActiveButton('btn-satellite');
     }
 
     setActiveButton(activeId) {
@@ -239,32 +239,55 @@ class CesiumMapBuilder {
     async addLineA() {
         if (!this.config.lineA.enabled) return;
 
-        const geojson = {
-            type: "FeatureCollection",
-            features: [{
-                type: "Feature",
-                properties: { name: "A", style: "Line" },
-                geometry: {
-                    type: "LineString",
-                    coordinates: this.config.lineA.coordinates
+        // nullで区切られた座標を複数のセグメントに分割
+        const segments = [];
+        let currentSegment = [];
+
+        for (const coord of this.config.lineA.coordinates) {
+            if (coord === null) {
+                if (currentSegment.length > 0) {
+                    segments.push(currentSegment);
+                    currentSegment = [];
                 }
-            }]
-        };
+            } else {
+                currentSegment.push(coord);
+            }
+        }
+        if (currentSegment.length > 0) {
+            segments.push(currentSegment);
+        }
 
-        const ds = await Cesium.GeoJsonDataSource.load(geojson);
-        await this.viewer.dataSources.add(ds);
+        // 各セグメントごとにGeoJSONを作成して表示
+        for (const segment of segments) {
+            const geojson = {
+                type: "FeatureCollection",
+                features: [{
+                    type: "Feature",
+                    properties: { name: "A", style: "Line" },
+                    geometry: {
+                        type: "LineString",
+                        coordinates: segment
+                    }
+                }]
+            };
 
-        for (const entity of ds.entities.values) {
-            if (entity.polyline) {
-                entity.polyline.material = new Cesium.PolylineDashMaterialProperty({
-                    color: Cesium.Color.RED,
-                    gapColor: Cesium.Color.TRANSPARENT,
-                    dashLength: 17,
-                });
-                entity.polyline.width = 4;
-                entity.polyline.clampToGround = true;
-                entity.show = this.config.lineA.defaultVisible;
-                this.entities.lineA = entity;
+            const ds = await Cesium.GeoJsonDataSource.load(geojson);
+            await this.viewer.dataSources.add(ds);
+
+            for (const entity of ds.entities.values) {
+                if (entity.polyline) {
+                    entity.polyline.material = new Cesium.PolylineDashMaterialProperty({
+                        color: Cesium.Color.RED,
+                        gapColor: Cesium.Color.TRANSPARENT,
+                        dashLength: 17,
+                    });
+                    entity.polyline.width = 4;
+                    entity.polyline.clampToGround = true;
+                    entity.show = this.config.lineA.defaultVisible;
+                    if (!this.entities.lineA) {
+                        this.entities.lineA = entity;
+                    }
+                }
             }
         }
 
