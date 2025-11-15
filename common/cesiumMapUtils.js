@@ -212,10 +212,15 @@ class CesiumMapBuilder {
         ];
 
         buttons.forEach(btn => {
-            if (!btn.enabled) return;
-
             const button = document.getElementById(btn.id);
             if (button) {
+                if (!btn.enabled) {
+                    // 無効なボタンは非表示
+                    button.style.display = 'none';
+                    return;
+                }
+                // 有効なボタンは表示してイベントを設定
+                button.style.display = '';
                 button.onclick = () => {
                     this.showLayer(btn.type);
                     this.setActiveButton(btn.id);
