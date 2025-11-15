@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>日本旅行|Japan Tour map</title>
+
+    <!-- Cesium -->
+    <script src="https://unpkg.com/cesium@latest/Build/Cesium/Cesium.js"></script>
+    <link href="https://unpkg.com/cesium@latest/Build/Cesium/Widgets/widgets.css" rel="stylesheet" />
+
+    <!-- 共通CSS -->
+    <link href="../../common/styles.css" rel="stylesheet" />
+
+    <style>
+        /* 余白完全除去 */
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: hidden !important;
+            box-sizing: border-box !important;
+        }
+
+        #cesiumContainer {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .cesium-viewer {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* レイヤーツールバー（確実に表示） */
+        .layer-toolbar {
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 1000 !important;
+            background: rgba(0, 0, 0, .45) !important;
+            backdrop-filter: blur(6px) !important;
+            border-radius: 12px !important;
+            padding: 6px !important;
+            display: flex !important;
+            gap: 6px !important;
+        }
+
+        .layer-toolbar button {
+            border: none !important;
+            padding: 6px 10px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            color: #fff !important;
+            background: rgba(255, 255, 255, .12) !important;
+            font-size: 14px !important;
+        }
+
+        .layer-toolbar button.active {
+            background: #2d8cff !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- レイヤー切替ツールバー -->
+    <div class="layer-toolbar">
+        <button id="btn-gsi">GEO</button>
+        <button id="btn-satellite">SAT</button>
+        <button id="btn-old">1945</button>
+        <button id="btn-google">GGL</button>
+    </div>
+
+    <!-- Cesiumコンテナ -->
+    <div id="cesiumContainer"></div>
+
+    <!-- 共通ライブラリ -->
+    <script src="../../common/layerDefinitions.js"></script>
+    <script src="../../common/cesiumMapUtils.js"></script>
+
+    <!-- 地図固有の設定 -->
+    <script src="config.js"></script>
+
+    <!-- 初期化スクリプト -->
+    <script>
+        (async function () {
+            const mapBuilder = new CesiumMapBuilder('cesiumContainer', MAP_CONFIG);
+            await mapBuilder.init(LAYER_DEFINITIONS);
+        })();
+    </script>
+</body>
+
+</html>
