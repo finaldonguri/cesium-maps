@@ -285,8 +285,9 @@ class CesiumMapBuilder {
                     entity.polyline.clampToGround = true;
                     entity.show = this.config.lineA.defaultVisible;
                     if (!this.entities.lineA) {
-                        this.entities.lineA = entity;
+                        this.entities.lineA = [];
                     }
+                    this.entities.lineA.push(entity);
                 }
             }
         }
@@ -439,7 +440,9 @@ class CesiumMapBuilder {
 
         btn.onclick = () => {
             visible = !visible;
-            if (this.entities.lineA) {
+            if (Array.isArray(this.entities.lineA)) {
+                this.entities.lineA.forEach(entity => entity.show = visible);
+            } else if (this.entities.lineA) {
                 this.entities.lineA.show = visible;
             }
             refreshLook();
